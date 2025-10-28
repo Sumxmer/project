@@ -1,11 +1,9 @@
 <template>
   <nav class="navbar">
-    <!-- ซ้าย: ชื่อเว็บ -->
     <div class="logo">
       <h2>testtt</h2>
     </div>
 
-    <!-- ขวา: เมนู -->
     <ul class="nav-links">
       <li><router-link to="/about">เกี่ยวกับฉัน</router-link></li>
       <li><router-link to="/description">คำอธิบาย</router-link></li>
@@ -21,18 +19,19 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 40px; /* เพิ่ม padding ให้ดูโปร */
+  /* ***แก้ไข: เปลี่ยนพื้นหลังเป็นสีเทา (เช่น #333333) *** */
+  background-color: #333333; 
+  color: white; /* คงสีข้อความหลักเป็นสีขาว */
+  padding: 12px 40px; 
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
   display: flex;
-  justify-content: space-between; /* ซ้าย-ขวาสุด */
+  justify-content: space-between; 
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4); /* ปรับเงาเล็กน้อย */
 }
 
 .logo h2 {
@@ -51,7 +50,7 @@ export default {
 }
 
 .nav-links li a {
-  color: white;
+  color: white; /* ให้ลิงก์เป็นสีขาวเพื่อให้ตัดกับพื้นหลังเทาเข้ม */
   text-decoration: none;
   font-size: 1em;
   font-weight: 500;
@@ -59,7 +58,7 @@ export default {
 }
 
 .nav-links li a:hover {
-  color: #ffeb3b;
+  color: #ffeb3b; /* คงสี Hover เป็นสีเหลือง */
 }
 
 /* Responsive */
