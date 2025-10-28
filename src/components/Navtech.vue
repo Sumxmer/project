@@ -8,7 +8,7 @@
       <li><router-link to="/job-list">งานที่ได้รับมอบหมาย</router-link></li>
       <li><router-link to="/history">ประวัติการซ่อม</router-link></li>
       <li><router-link to="/profile">โปรไฟล์</router-link></li>
-      <li><router-link to="/login">ออกจากระบบ</router-link></li>
+      <li><router-link to="/home">ออกจากระบบ</router-link></li>
     </ul>
   </nav>
 </template>

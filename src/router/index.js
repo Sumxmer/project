@@ -8,7 +8,7 @@ import Profile from '../views/cust/Profile.vue'
 import Homecust from '../views/cust/Home.vue'
 import Dashboard from '../views/tech/Dashboard.vue'
 import JobList from '../views/tech/JobList.vue'
-
+import History from '../views/tech/History.vue'
 
 
 const routes = [
@@ -21,7 +21,8 @@ const routes = [
   { path: '/profile', component: Profile },
   { path: '/homecust', component: Homecust },
   {  path: '/dashboard', component: Dashboard },
-  { path: '/job-list', component: JobList }
+  { path: '/job-list', component: JobList },
+  { path: '/history', component: History }
   
   
   
