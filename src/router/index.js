@@ -6,6 +6,7 @@ import RequestRepair from '../views/cust/RequestRepair.vue'
 import RepairHistory from '../views/cust/RepairHistory.vue'
 import Profile from '../views/cust/Profile.vue'
 import Homecust from '../views/cust/Home.vue'
+import Dashboard from '../views/tech/Dashboard.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },       // redirect จาก / ไป /home
@@ -15,7 +16,8 @@ const routes = [
   { path: '/request-repair', component: RequestRepair },
   { path: '/repair-history', component: RepairHistory },
   { path: '/profile', component: Profile },
-  { path: '/homecust', component: Homecust }
+  { path: '/homecust', component: Homecust },
+  {  path: '/dashboard', component: Dashboard }
   
   
   
