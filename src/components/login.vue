@@ -23,7 +23,7 @@
 
       <button type="submit" class="btn-login">เข้าสู่ระบบ</button>
 
-      <router-link to="/request-repair" class="register-text">
+      <router-link to="/register" class="register-text">
         ยังไม่มีบัญชี? สมัครสมาชิก</router-link>
     
       <div class="btnt">

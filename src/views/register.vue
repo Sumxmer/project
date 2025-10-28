@@ -46,6 +46,7 @@
 
       <button type="submit">สมัครสมาชิก</button>
     </form>
+    <a href="/home" class="back-to-friend">กลับสู่หน้าหลัก</a>
   </div>
 </template>
 

@@ -24,7 +24,7 @@
       <button type="submit" class="btn-login">เข้าสู่ระบบ</button>
 
       <p class="register-text">
-        ยังไม่มีบัญชี? <a href="/dashboard">สมัครสมาชิก</a>
+        ยังไม่มีบัญชี? <a href="/register">สมัครสมาชิก</a>
       </p>
     
       <div class="btnt">
