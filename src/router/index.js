@@ -3,8 +3,9 @@ import Home from '../views/Home.vue'
 import login from '../components/login.vue'
 import logintech from '../components/logintech.vue'
 import RequestRepair from '../views/cust/RequestRepair.vue'
-import Navcust from '../components/navcust.vue'
-
+import RepairHistory from '../views/cust/RepairHistory.vue'
+import Profile from '../views/cust/Profile.vue'
+import Homecust from '../views/cust/Home.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },       // redirect จาก / ไป /home
@@ -12,7 +13,10 @@ const routes = [
   { path: '/login', component: login },
   { path: '/logintech', component: logintech },
   { path: '/request-repair', component: RequestRepair },
-  { path: '/navcust', component: Navcust }
+  { path: '/repair-history', component: RepairHistory },
+  { path: '/profile', component: Profile },
+  { path: '/homecust', component: Homecust }
+  
   
   
 ]

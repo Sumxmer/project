@@ -1,5 +1,5 @@
 <template>
-  <Navcust/>
+  <Navcust />
   <div class="container">
     <!-- Header -->
     <header class="header">
@@ -49,11 +49,14 @@
 </template>
 
 <script>
-import Navcust from '../../components/navcust.vue';
+import Navcust from '../../components/Navcust.vue';
 
 export default {
   
-  name: 'RequestRepair',
+    name: 'RequestRepair',
+  components: {
+    Navcust  // <-- ต้องใส่ตรงนี้
+  },
   data() {
     return {
       category: '',

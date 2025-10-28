@@ -1,13 +1,15 @@
 <template>
   <nav class="navbar-vertical">
     <div class="logo">
-      <h2>ช่างดีลิเวอรี่</h2>
+      <h2>ลูกค้าที่แสนดี</h2>
     </div>
     <ul class="nav-links">
-      <li><router-link to="/customer/home">หน้าแรก</router-link></li>
-      <li><router-link to="/customer/request">แจ้งซ่อม</router-link></li>
-      <li><router-link to="/customer/history">ประวัติการซ่อม</router-link></li>
-      <li><router-link to="/customer/profile">โปรไฟล์</router-link></li>
+      <li><router-link to="/homecust">หน้าแรก</router-link></li>
+      <li><router-link to="/request-repair">แจ้งซ่อม</router-link></li>
+      <li><router-link to="/repair-history">ประวัติการซ่อม</router-link></li>
+      <li><router-link to="/profile">โปรไฟล์</router-link></li>
+      <li><router-link to="/Home">ออกจากระบบ</router-link></li>
+        
     </ul>
   </nav>
 </template>
