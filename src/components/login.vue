@@ -18,7 +18,7 @@
       </div>
 
       <div class="forgot-password">
-        <a href="#">ลืมรหัสผ่าน?</a>
+        <router-link to="/register">ลืมรหัสผ่าน?</router-link>
       </div>
 
       <button type="submit" class="btn-login">เข้าสู่ระบบ</button>
