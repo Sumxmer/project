@@ -1,5 +1,5 @@
 <template>
-  <div class="hero-section">
+  <div class="page-wrapper">
     <header class="navbar">
       <div class="navbar-container">
         <div class="logo">
@@ -14,16 +14,18 @@
       </div>
     </header>
 
-    <div class="hero-content">
-      <h1 class="hero-text">Fixถึงใจที่ถึงที่</h1>
-      <p class="hero-subtitle">บริการคุณภาพ พร้อมฟิตเนสทุกที่ทุกเวลา</p>
-      
-      <!-- ปุ่มชมพูเรืองแสง -->
-      <router-link to="/login" class="GlowingButton">
-        <span class="GlowingButton__content">
-          <span>เข้าสู่ระบบ</span>
-        </span>
-      </router-link>
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-text">Fixถึงใจที่ถึงที่</h1>
+        <p class="hero-subtitle">บริการคุณภาพ พร้อมฟิตเนสทุกที่ทุกเวลา</p>
+        
+        <!-- ปุ่มชมพูเรืองแสง -->
+        <router-link to="/login" class="GlowingButton">
+          <span class="GlowingButton__content">
+            <span>เข้าสู่ระบบ</span>
+          </span>
+        </router-link>
+      </div>
     </div>
 
     <div class="blue-footer-bar"></div>
@@ -34,12 +36,24 @@
 // ไม่มี JS logic สำหรับหน้านี้
 </script>
 
-<style scoped>
+<style>
 /* ================================================= */
-/* พื้นหลังสีดำทั่วทั้งหน้า - แก้ไข Bug */
-:global(html),
-:global(body),
-:global(#app) {
+/* Global Reset - แก้ปัญหาช่องว่าง */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -47,58 +61,32 @@
   background-color: #000000;
   overflow-x: hidden;
   font-family: 'Space Grotesk', sans-serif;
-  box-sizing: border-box;
 }
 
-:global(*) {
-  box-sizing: border-box;
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
 }
+</style>
 
+<style scoped>
 /* ================================================= */
-/* Hero Section - แก้ไขให้เต็มหน้าจอ */
-.hero-section {
+/* Page Wrapper - ครอบทั้งหมด */
+.page-wrapper {
+  position: relative;
   width: 100vw;
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-
-/* เพิ่มพื้นหลัง particle effect */
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(2px 2px at 20% 30%, rgba(255, 0, 127, 0.3), transparent),
-    radial-gradient(2px 2px at 60% 70%, rgba(255, 196, 0, 0.3), transparent),
-    radial-gradient(1px 1px at 50% 50%, rgba(41, 224, 131, 0.3), transparent),
-    radial-gradient(2px 2px at 80% 10%, rgba(0, 123, 255, 0.3), transparent);
-  background-size: 200% 200%;
-  background-position: 0% 0%;
-  animation: particles 20s ease infinite;
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-@keyframes particles {
-  0%, 100% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
+  overflow-x: hidden;
 }
 
 /* ================================================= */
-/* Navbar - ออกแบบใหม่ให้สวยงาม */
+/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
@@ -181,11 +169,50 @@
 }
 
 /* ================================================= */
+/* Hero Section */
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem;
+  overflow: hidden;
+}
+
+/* เพิ่มพื้นหลัง particle effect */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 0, 127, 0.3), transparent),
+    radial-gradient(2px 2px at 60% 70%, rgba(255, 196, 0, 0.3), transparent),
+    radial-gradient(1px 1px at 50% 50%, rgba(41, 224, 131, 0.3), transparent),
+    radial-gradient(2px 2px at 80% 10%, rgba(0, 123, 255, 0.3), transparent);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  animation: particles 20s ease infinite;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@keyframes particles {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
 /* Hero Content */
 .hero-content {
-  margin-top: 6rem;
+  position: relative;
   z-index: 1;
-  padding: 0 2rem;
+  margin-top: 4rem;
 }
 
 /* ข้อความหัวเรื่อง ขยับขึ้นลงเล็กน้อย */
@@ -293,6 +320,7 @@
   background-size: 200% 100%;
   animation: footer-animate 5s linear infinite;
   box-shadow: 0 -2px 20px rgba(255, 0, 127, 0.5);
+  z-index: 999;
 }
 
 @keyframes footer-animate {
@@ -302,13 +330,13 @@
 
 /* ================================================= */
 /* Responsive */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
   .navbar-container {
     padding: 1rem 1.5rem;
   }
   
   .logo {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
   
   .nav-links {
@@ -320,21 +348,15 @@
   }
   
   .hero-text { 
-    font-size: 3rem; 
+    font-size: 3.5rem; 
   }
   
   .hero-subtitle { 
-    font-size: 1.1rem; 
-  }
-  
-  .GlowingButton { 
-    width: 160px; 
-    height: 45px; 
-    font-size: 1rem; 
+    font-size: 1.2rem; 
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .navbar-container {
     flex-direction: column;
     gap: 1rem;
@@ -348,11 +370,31 @@
   }
   
   .hero-text { 
-    font-size: 2rem; 
+    font-size: 2.5rem; 
   }
   
   .hero-subtitle { 
     font-size: 1rem; 
+  }
+  
+  .GlowingButton { 
+    width: 160px; 
+    height: 45px; 
+    font-size: 1rem; 
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-text { 
+    font-size: 2rem; 
+  }
+  
+  .hero-subtitle { 
+    font-size: 0.9rem; 
+  }
+  
+  .nav-item {
+    font-size: 0.85rem;
   }
 }
 </style>
