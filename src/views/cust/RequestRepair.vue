@@ -3,7 +3,8 @@
   <div class="container">
     <!-- Header -->
     <header class="header">
-      <h1>แจ้งซ่อม</h1>
+      <h1><i class="fa-solid fa-hammer-wrench"></i> แจ้งซ่อม</h1>
+
       <p>กรอกข้อมูลด้านล่างเพื่อเรียกช่างถึงที่</p>
     </header>
 
@@ -42,7 +43,8 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit">ส่งงานซ่อม</button>
+        <button type="submit" class="ghost-btn">ส่งงานซ่อม</button>
+
       </form>
     </div>
   </div>
@@ -93,6 +95,43 @@ export default {
 </script>
 
 <style scoped>
+select option {
+  color: #000;
+}
+.header h1 i {
+  margin-right: 8px;
+  color: #F1647C;
+  transition: transform .4s;
+  display: inline-block;
+}
+.header h1 {
+  color: #F1647C; /* เปลี่ยนเป็นสีที่ต้องการ */
+}
+
+
+.header h1:hover i {
+  transform: rotate(360deg);
+}
+
+/* Ghost Button */
+.ghost-btn {
+  width: 100%;
+  background: transparent;
+  border: 2px solid #F1647CFF;
+  color: #F1647CFF;
+  padding: 12px;
+  font-size: 1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.ghost-btn:hover {
+  background: #007bff22; /* ฟีลกลั้วๆ */
+}
+
+
 /* Container */
 .container {
   max-width: 600px;
@@ -113,7 +152,7 @@ export default {
 }
 
 .header p {
-  color: #555;
+  color: #929191FF;
 }
 
 /* Card */

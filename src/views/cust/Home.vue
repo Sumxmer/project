@@ -65,7 +65,7 @@ export default {
 }
 
 .header p {
-  color: #555;
+  color: #908f8f;
 }
 
 /* Shortcut Cards */
@@ -89,7 +89,7 @@ export default {
 
 .card h2 {
   margin-top: 0;
-  color: #007bff;
+  color: #F1647C;
 }
 
 .card:hover {
