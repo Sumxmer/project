@@ -7,7 +7,7 @@
       <li><router-link to="/dashboard">หน้าแรก</router-link></li>
       <li><router-link to="/job-list">งานที่ได้รับมอบหมาย</router-link></li>
       <li><router-link to="/history">ประวัติการซ่อม</router-link></li>
-      <li><router-link to="/profile">โปรไฟล์</router-link></li>
+      <li><router-link to="/technician-profile">โปรไฟล์</router-link></li>
       <li><router-link to="/home">ออกจากระบบ</router-link></li>
     </ul>
   </nav>
