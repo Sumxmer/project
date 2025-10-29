@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navcust />
+    <Navtech />
     <div class="content-wrapper">
       <header class="header">
         <h1>โปรไฟล์ช่าง</h1>
@@ -40,11 +40,12 @@
 </template>
 
 <script>
-import Navcust from '../../components/Navcust.vue';
+import Navtech from '../../components/Navtech.vue';
+
 
 export default {
   name: 'TechnicianProfile',
-  components: { Navcust },
+  components: { Navtech },
   data() {
     return {
       editMode: false,

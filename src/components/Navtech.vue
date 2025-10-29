@@ -20,6 +20,9 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .navbar-vertical {
   position: fixed;
   top: 0;
@@ -39,6 +42,7 @@ export default {
 .logo h2 {
   margin: 0 0 30px 0;
   font-size: 1.5em;
+  
 }
 
 .nav-links {
@@ -80,7 +84,10 @@ body {
     padding: 10px;
   }
   .logo {
-    margin-right: 20px;
+    display: flex;
+  justify-content: center; /* จัดกึ่งกลางแนวนอน */
+  align-items: flex-start; /* อยู่ด้านบน */
+  padding-top: 20px;       /* เว้นระยะจากบน */
   }
   .nav-links {
     display: flex;
