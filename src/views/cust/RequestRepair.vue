@@ -12,32 +12,32 @@
       <form @submit.prevent="submitRepair">
         <!-- Repair Category -->
         <div class="form-group">
-          <label>ประเภทงานซ่อม</label>
+          <label class="text">ประเภทงานซ่อม</label>
           <select v-model="category" required>
             <option disabled value="">เลือกประเภทงานซ่อม</option>
-            <option>ไฟฟ้า</option>
-            <option>ประปา</option>
-            <option>แอร์</option>
-            <option>เครื่องใช้ไฟฟ้า</option>
-            <option>อื่น ๆ</option>
+            <option>เครื่องใช้ไฟฟ้า/อิเล็กทรอนิกส์</option>
+            <option>ซ่อมยานยนต์/เครื่องจักร</option>
+            <option>ซ่อมอาคาร/ก่อสร้าง</option>
+            <option>ซ่อมระบบไอที/เครือข่าย</option>
+            <option>ซ่อมทั่วไป/อื่น ๆ</option>
           </select>
         </div>
 
         <!-- Description -->
         <div class="form-group">
-          <label>รายละเอียดปัญหา</label>
+          <label class="text">รายละเอียดปัญหา</label>
           <textarea v-model="description" rows="4" placeholder="กรอกรายละเอียดปัญหา..." required></textarea>
         </div>
 
         <!-- Address -->
         <div class="form-group">
-          <label>ที่อยู่</label>
+          <label class="text">ที่อยู่</label>
           <input v-model="address" type="text" placeholder="กรอกที่อยู่" required/>
         </div>
 
         <!-- Image Upload -->
         <div class="form-group">
-          <label>แนบรูปภาพ (ถ้ามี)</label>
+          <label class="text">แนบรูปภาพ (ถ้ามี)</label>
           <input type="file" @change="handleImageUpload" multiple/>
         </div>
 
@@ -93,6 +93,12 @@ export default {
 </script>
 
 <style scoped>
+
+.text {
+  font-weight: bold;
+  color: #555;
+}
+
 /* Container */
 .container {
   max-width: 600px;
@@ -110,6 +116,7 @@ export default {
 .header h1 {
   font-size: 2em;
   margin-bottom: 5px;
+  color: #555;
 }
 
 .header p {

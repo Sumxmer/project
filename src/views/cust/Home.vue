@@ -4,19 +4,22 @@
     <div class="content-wrapper">
       <header class="header">
         <h1>ยินดีต้อนรับ, {{ user.name }}</h1>
-        <p>เลือกเมนูด้านซ้ายเพื่อทำรายการต่าง ๆ</p>
+        <p>เลือกเมนูด้านล่างเพื่อเริ่มใช้งาน</p>
       </header>
 
       <div class="shortcut-cards">
-        <div class="card" @click="goTo('/request-repair')">
+        <div class="card repair" @click="goTo('/request-repair')">
+          <div class="icon">🛠️</div>
           <h2>แจ้งซ่อม</h2>
           <p>ส่งงานซ่อมถึงช่างได้ทันที</p>
         </div>
-        <div class="card" @click="goTo('/customer/history')">
+        <div class="card history" @click="goTo('/customer/history')">
+          <div class="icon">📜</div>
           <h2>ประวัติการซ่อม</h2>
           <p>ตรวจสอบรายการแจ้งซ่อมของคุณ</p>
         </div>
-        <div class="card" @click="goTo('/customer/profile')">
+        <div class="card profile" @click="goTo('/customer/profile')">
+          <div class="icon">👤</div>
           <h2>โปรไฟล์</h2>
           <p>แก้ไขข้อมูลส่วนตัวของคุณ</p>
         </div>
@@ -33,9 +36,7 @@ export default {
   components: { Navcust },
   data() {
     return {
-      user: {
-        name: 'สมชาย ใจดี'
-      }
+      user: { name: 'สมชาย ใจดี' }
     }
   },
   methods: {
@@ -48,57 +49,87 @@ export default {
 
 <style scoped>
 .content-wrapper {
-  margin-left: 200px; /* เว้นพื้นที่ navbar */
+  margin-left: 200px;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  min-height: 100vh;
 }
 
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .header h1 {
-  font-size: 2em;
+  font-size: 2.2em;
   margin-bottom: 5px;
+  color: #333;
 }
 
 .header p {
-  color: #555;
+  color: #666;
+  font-size: 1.1em;
 }
 
 /* Shortcut Cards */
 .shortcut-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 25px;
   justify-content: center;
 }
 
 .card {
   background-color: #fff;
-  border-radius: 15px;
-  padding: 25px;
-  width: 200px;
+  border-radius: 20px;
+  padding: 30px 20px;
+  width: 220px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
   cursor: pointer;
-  transition: transform 0.3s, background 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  position: relative;
+}
+
+.card .icon {
+  font-size: 2.5em;
+  margin-bottom: 15px;
+}
+
+/* Color variants */
+.card.repair {
+  border-top: 5px solid #ff6f00; /* สีส้มแจ้งซ่อม */
+}
+
+.card.history {
+  border-top: 5px solid #007bff; /* สีฟ้าประวัติ */
+}
+
+.card.profile {
+  border-top: 5px solid #28a745; /* สีเขียวโปรไฟล์ */
 }
 
 .card h2 {
-  margin-top: 0;
-  color: #007bff;
+  margin: 0 0 10px;
+  color: #333;
 }
 
+.card p {
+  color: #555;
+  font-size: 0.95em;
+}
+
+/* Hover effect */
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   background-color: #f0f8ff;
 }
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .content-wrapper {
     margin-left: 0;
   }
