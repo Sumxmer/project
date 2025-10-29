@@ -5,25 +5,25 @@
     <form @submit.prevent="register">
       <!-- ชื่อผู้ใช้ -->
       <div class="form-group">
-        <label>ชื่อผู้ใช้</label>
+        <label class="white">ชื่อผู้ใช้</label>
         <input v-model="username" type="text" required placeholder="กรอกชื่อผู้ใช้" />
       </div>
 
       <!-- อีเมล -->
       <div class="form-group">
-        <label>อีเมล</label>
+        <label class="white">อีเมล</label>
         <input v-model="email" type="email" required placeholder="กรอกอีเมล" />
       </div>
 
       <!-- รหัสผ่าน -->
       <div class="form-group">
-        <label>รหัสผ่าน</label>
+        <label class="white">รหัสผ่าน</label>
         <input v-model="password" type="password" required placeholder="กรอกรหัสผ่าน" />
       </div>
 
       <!-- ประเภทผู้ใช้ -->
       <div class="form-group role-select">
-        <label>สมัครเป็น:</label>
+        <label class="white">สมัครเป็น:</label>
         <div class="role-options">
           <label>
             <input
@@ -31,7 +31,7 @@
               :checked="selectedRole === 'customer'"
               @change="handleRoleChange('customer')"
             />
-            <span>ลูกค้า</span>
+            <span class="white">ลูกค้า</span>
           </label>
           <label>
             <input
@@ -39,7 +39,7 @@
               :checked="selectedRole === 'technician'"
               @change="handleRoleChange('technician')"
             />
-            <span>ช่าง</span>
+            <span class="white">ช่าง</span>
           </label>
         </div>
       </div>
@@ -106,18 +106,23 @@ export default {
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   background-color: #fff;
+  
   font-family: "Prompt", sans-serif;
+}
+
+.white {
+  color: white;
 }
 
 h1 {
   text-align: center;
   margin-bottom: 25px;
-  color: #000; /* ตัวหนังสือดำ */
+  color: white; /* ตัวหนังสือดำ */
 }
 
 .form-group {
   margin-bottom: 20px;
-  color: #000; /* ตัวหนังสือดำ */
+  color: white; /* ตัวหนังสือดำ */
 }
 
 label {
