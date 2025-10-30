@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <header class="navbar">
+    <header class="navbar">            
       <div class="navbar-container">
         <div class="logo">
           <span class="logo-text">FIT<span class="logo-highlight">ถึงใจ</span></span>
@@ -76,7 +76,7 @@ body {
 /* ================================================= */
 /* Page Wrapper - ครอบทั้งหมด */
 .page-wrapper {
-  position: relative;
+  position: absolute;
   width: 100vw;
   min-height: 100vh;
   margin: 0;

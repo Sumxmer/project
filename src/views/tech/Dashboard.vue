@@ -161,7 +161,7 @@ export default {
   padding: 0;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   color: #fff;
-  position: relative;
+  position: absolute;
   overflow-x: hidden;
 }
 

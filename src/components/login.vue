@@ -143,8 +143,8 @@ export default {
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-  padding: 2rem;
-  position: relative;
+  padding: 1.5rem;
+  position: absolute;
   overflow: hidden;
 }
 
@@ -511,7 +511,7 @@ export default {
   .logo-icon {
     font-size: 3rem;
   }
-}
+}               
 
 @media (max-width: 480px) {
   .login-page {

@@ -257,7 +257,7 @@ export default {
   width: 100%;
   background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
   color: #ffffff;
-  position: relative;
+  position: absolute;
   font-family: 'Sarabun', 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -284,7 +284,7 @@ export default {
 .content-wrapper {
   margin-left: 220px;
   padding: 100px 40px 80px;
-  max-width: 1000px;
+  max-width: 2000px;
   position: relative;
   z-index: 1;
 }
