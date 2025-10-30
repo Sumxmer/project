@@ -3,7 +3,7 @@
     <header class="navbar">
       <div class="navbar-container">
         <div class="logo">
-          <span class="logo-text">FIT<span class="logo-highlight">ถึงใจ</span></span>
+          <span class="logo-text">FIX <span class="logo-highlight">ถึงใจ</span></span>
         </div>
         <nav class="nav-links">
           <a href="#" class="nav-item">หน้าหลัก</a>
@@ -16,8 +16,9 @@
 
     <div class="hero-section">
       <div class="hero-content">
-        <h1 class="hero-text">Fixถึงใจที่ถึงที่</h1>
-        <p class="hero-subtitle">บริการคุณภาพ พร้อมฟิตเนสทุกที่ทุกเวลา</p>
+        <h1 class="hero-text">Fixถึงใจ ไปถึงที่</h1>
+        <p class="hero-subtitle">บริการดีมีคุณภาพ พร้อมไปหาคุณทุกที่ทุกเวลา </p>
+        
         
         <!-- ปุ่มชมพูเรืองแสง -->
         <router-link to="/login" class="GlowingButton">
