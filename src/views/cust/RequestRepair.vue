@@ -192,7 +192,7 @@ export default {
 
 /* Content Wrapper */
 .content-wrapper {
-  margin-left: 250px;
+  margin-left: 250px; 
   padding: 3rem 2rem;
   min-height: 100vh;
   display: flex;
