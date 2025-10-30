@@ -24,10 +24,6 @@
               <img :src="technician.avatar" alt="รูปช่าง" class="avatar" />
               <div class="avatar-ring"></div>
             </div>
-            <div class="status-badge">
-              <span class="status-dot"></span>
-              <span class="status-text">ออนไลน์</span>
-            </div>
           </div>
 
           <!-- โหมดแสดงข้อมูล (ไม่ใช่โหมดแก้ไข) -->
@@ -411,28 +407,6 @@ export default {
   z-index: 1;
 }
 
-/* Status Badge */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1.2rem;
-  background: rgba(41, 224, 131, 0.15);
-  border: 1px solid rgba(41, 224, 131, 0.3);
-  border-radius: 20px;
-  color: #29e083;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #29e083;
-  box-shadow: 0 0 10px rgba(41, 224, 131, 0.6);
-  animation: pulse 2s ease-in-out infinite;
-}
 
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }

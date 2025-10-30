@@ -292,6 +292,7 @@ export default {
   min-height: 100vh;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   font-family: 'Space Grotesk', sans-serif;
+  position: absolute;
 }
 
 /* 
@@ -304,6 +305,12 @@ export default {
   margin-left: 250px; /* เว้นที่สำหรับ sidebar ในหน้าจอขนาดใหญ่ */
   padding: 3rem 2rem;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100vw - 250px); /* ทำให้กว้างเต็มที่หลังจากเว้น Nav */
+  position: relative; /* ใช้ relative แทน absolute */
+  box-sizing: border-box;
 }
 
 /* 
@@ -411,6 +418,7 @@ export default {
   การ์ดแต่ละใบที่แสดงข้อมูลงานซ่อม
 */
 .repair-card {
+  
   background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(0, 0, 0, 0.9));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); /* สำหรับ Safari */
