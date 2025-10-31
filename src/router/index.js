@@ -11,7 +11,7 @@ import JobList from '../views/tech/JobList.vue'
 import History from '../views/tech/History.vue'
 import register from '../views/register.vue'
 import TechnicianProfile from '../views/tech/TechnicianProfile.vue'
-
+import finaldeveloper from '../views/finaldeveloper.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },       // redirect จาก / ไป /home
@@ -26,7 +26,9 @@ const routes = [
   { path: '/job-list', component: JobList },
   { path: '/history', component: History },
   { path: '/register', component: register },
-  { path: '/technician-profile', component: TechnicianProfile }
+  { path: '/technician-profile', component: TechnicianProfile },
+  { path: '/finaldeveloper', component: finaldeveloper }
+
   
   
   
