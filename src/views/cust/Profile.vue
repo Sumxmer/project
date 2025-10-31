@@ -80,16 +80,20 @@ export default {
   min-height: 100vh;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   font-family: 'Space Grotesk', sans-serif;
+  position: absolute;
 }
 
 /* Content Wrapper */
 .content-wrapper {
-  margin-left: 250px;
+  margin-left: 250px; /* ถ้ายังอยากให้เว้นด้านซ้ายไว้สำหรับ Nav */
   padding: 3rem 2rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: calc(100vw - 250px); /* ทำให้กว้างเต็มที่หลังจากเว้น Nav */
+  position: relative; /* ใช้ relative แทน absolute */
+  box-sizing: border-box;
 }
 
 /* Header */

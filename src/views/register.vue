@@ -220,7 +220,7 @@ export default {
   align-items: center;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
   padding: 2rem;
-  position: relative;
+  position: absolute;
   overflow: hidden;
 }
 
@@ -635,7 +635,7 @@ export default {
 
   .logo-icon {
     font-size: 3rem;
-  }
+  }                                      
 
   .role-options {
     flex-direction: column;

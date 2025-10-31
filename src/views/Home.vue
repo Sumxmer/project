@@ -77,7 +77,7 @@ body {
 /* ================================================= */
 /* Page Wrapper - ครอบทั้งหมด */
 .page-wrapper {
-  position: relative;
+  position: absolute;
   width: 100vw;
   min-height: 100vh;
   margin: 0;
