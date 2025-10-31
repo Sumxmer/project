@@ -6,10 +6,7 @@
           <span class="logo-text">FIX <span class="logo-highlight">ถึงใจ</span></span>
         </div>
         <nav class="nav-links">
-          <a href="#" class="nav-item">หน้าหลัก</a>
-          <a href="#" class="nav-item">เกี่ยวกับ</a>
-          <a href="#" class="nav-item">บริการ</a>
-          <a href="#" class="nav-item">ติดต่อ</a>
+          <router-link to="/finaldeveloper" class="nav-item">Developer</router-link>
         </nav>
       </div>
     </header>
