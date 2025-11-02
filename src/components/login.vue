@@ -1,43 +1,37 @@
 <template>
   <div class="login-page">
-    <!-- Background Particles Effect -->
     <div class="particles-bg"></div>
-
-    <!-- Login Card Container -->
     <div class="login-container">
       <div class="login-card">
-        <!-- Header Section -->
         <div class="login-header">
           <div class="logo-icon">👤</div>
           <h1 class="login-title">เข้าสู่ระบบ</h1>
           <p class="login-subtitle">ลูกค้า</p>
         </div>
 
-        <!-- Login Form -->
         <form @submit.prevent="handleLogin" class="login-form">
-          <!-- Email Input -->
+          
           <div class="form-group">
             <label class="form-label">
-              <span class="label-icon">📧</span>
-              <span>อีเมล</span>
+              <span class="label-icon">🧑</span>
+              <span>Username (UNAME)</span>
             </label>
             <div class="input-wrapper">
               <span class="input-icon">@</span>
               <input 
-                type="email" 
-                v-model="email" 
-                placeholder="your@email.com" 
+                type="text" 
+                v-model="username"
+                placeholder="กรอก UNAME ของคุณ" 
                 required 
                 class="form-input"
               />
             </div>
           </div>
 
-          <!-- Password Input -->
           <div class="form-group">
             <label class="form-label">
               <span class="label-icon">🔒</span>
-              <span>รหัสผ่าน</span>
+              <span>รหัสผ่าน (UPASSW)</span>
             </label>
             <div class="input-wrapper">
               <span class="input-icon">🔐</span>
@@ -52,27 +46,27 @@
                 type="button" 
                 @click="showPassword = !showPassword" 
                 class="toggle-password"
-                :aria-label="showPassword ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน'"
               >
                 {{ showPassword ? '👁️' : '👁️‍🗨️' }}
               </button>
             </div>
           </div>
-
-          <!-- Forgot Password Link -->
+          
+          <p v-if="message" :class="['message', isError ? 'error-message' : 'success-message']">
+            {{ message }}
+          </p>
+          
           <div class="forgot-password">
             <router-link to="/forgot-password" class="forgot-link">
               ลืมรหัสผ่าน?
             </router-link>
           </div>
 
-          <!-- Login Button -->
           <button type="submit" class="btn-login">
             <span>เข้าสู่ระบบ</span>
             <span class="btn-arrow">→</span>
           </button>
-
-          <!-- Register Link -->
+          
           <p class="register-text">
             ยังไม่มีบัญชี? 
             <router-link to="/register" class="register-link">
@@ -80,52 +74,101 @@
             </router-link>
           </p>
 
-          <!-- Navigation Links -->
+          <!-- ⭐ 3 ปุ่ม Navigation -->
           <div class="nav-links">
             <router-link to="/home" class="nav-link">
               <span class="link-icon">🏠</span>
               <span>กลับหน้าแรก</span>
             </router-link>
-            <router-link to="/logintech" class="nav-link">
+            <router-link to="/logintech" class="nav-link nav-link-tech">
               <span class="link-icon">🔧</span>
-              <span>เข้าสู่ระบบช่าง</span>
+              <span>ล็อกอินช่าง</span>
+            </router-link>
+            <router-link to="/admin/login" class="nav-link nav-link-admin">
+              <span class="link-icon">👨‍💼</span>
+              <span>ล็อกอิน Admin</span>
             </router-link>
           </div>
         </form>
       </div>
     </div>
-
-    <!-- Gradient Footer Bar -->
     <div class="gradient-footer"></div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "LoginCustomer",
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
       showPassword: false,
+      message: "",
+      isError: false 
     };
   },
   methods: {
-    handleLogin() {
-      console.log("อีเมล:", this.email);
-      console.log("รหัสผ่าน:", this.password);
+    async handleLogin() {
+      this.message = "กำลังตรวจสอบ (User)...";
+      this.isError = false;
       
-      // Simulate login success
-      alert("✅ เข้าสู่ระบบสำเร็จ!");
-      this.$router.push('/homecust');
+      try {
+        const response = await axios.post('http://localhost:3000/api/login/user', {
+          UNAME: this.username,
+          UPASSW: this.password
+        }, {
+          withCredentials: true
+        });
+
+        this.message = response.data.message;
+        this.isError = false;
+        
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        
+        setTimeout(() => {
+          this.$router.push('/homecust');
+        }, 500);
+
+      } catch (error) {
+        if (error.response) {
+          this.message = 'Error: ' + error.response.data.message;
+        } else {
+          this.message = 'Error: เชื่อมต่อ Backend ไม่ได้ (ลืมรัน node index.js?)';
+        }
+        this.isError = true;
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-/* ================================================= */
-/* Page Setup */
+/* Messages */
+.message {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.error-message {
+  color: #ff4d4d;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid #ff4d4d;
+}
+
+.success-message {
+  color: #29e083;
+  background: rgba(41, 224, 131, 0.1);
+  border: 1px solid #29e083;
+}
+
+/* Global Reset */
 :global(html),
 :global(body) {
   margin: 0;
@@ -136,6 +179,7 @@ export default {
   font-family: 'Space Grotesk', 'Sarabun', sans-serif;
 }
 
+/* Page Container */
 .login-page {
   min-height: 100vh;
   width: 100%;
@@ -148,8 +192,7 @@ export default {
   overflow: hidden;
 }
 
-/* ================================================= */
-/* Background Particles */
+/* Particles Background */
 .particles-bg {
   position: fixed;
   top: 0;
@@ -173,7 +216,6 @@ export default {
   50% { background-position: 100% 100%; }
 }
 
-/* ================================================= */
 /* Login Container */
 .login-container {
   position: relative;
@@ -194,7 +236,6 @@ export default {
   }
 }
 
-/* ================================================= */
 /* Login Card */
 .login-card {
   background: rgba(20, 20, 20, 0.9);
@@ -215,8 +256,7 @@ export default {
     0 0 80px rgba(255, 0, 127, 0.3);
 }
 
-/* ================================================= */
-/* Header Section */
+/* Header */
 .login-header {
   text-align: center;
   margin-bottom: 2.5rem;
@@ -252,8 +292,7 @@ export default {
   font-weight: 300;
 }
 
-/* ================================================= */
-/* Form Styling */
+/* Form */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -281,8 +320,6 @@ export default {
   font-size: 1.2rem;
 }
 
-/* ================================================= */
-/* Input Wrapper */
 .input-wrapper {
   position: relative;
   display: flex;
@@ -327,8 +364,6 @@ export default {
   border-color: rgba(255, 0, 127, 0.5);
 }
 
-/* ================================================= */
-/* Toggle Password Button */
 .toggle-password {
   position: absolute;
   right: 1rem;
@@ -347,7 +382,6 @@ export default {
   transform: scale(1.1);
 }
 
-/* ================================================= */
 /* Forgot Password */
 .forgot-password {
   text-align: right;
@@ -367,7 +401,6 @@ export default {
   text-decoration: underline;
 }
 
-/* ================================================= */
 /* Login Button */
 .btn-login {
   width: 100%;
@@ -409,8 +442,7 @@ export default {
   transform: translateX(5px);
 }
 
-/* ================================================= */
-/* Register Text */
+/* Register Link */
 .register-text {
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
@@ -430,7 +462,6 @@ export default {
   text-decoration: underline;
 }
 
-/* ================================================= */
 /* Navigation Links */
 .nav-links {
   display: flex;
@@ -468,7 +499,25 @@ export default {
   font-size: 1.1rem;
 }
 
-/* ================================================= */
+/* Tech Link Highlight */
+.nav-link-tech:hover {
+  background: rgba(0, 123, 255, 0.2);
+  border-color: rgba(0, 123, 255, 0.5);
+  color: #007bff;
+}
+
+/* Admin Link Highlight */
+.nav-link-admin {
+  background: rgba(255, 196, 0, 0.1);
+  border-color: rgba(255, 196, 0, 0.3);
+}
+
+.nav-link-admin:hover {
+  background: rgba(255, 196, 0, 0.2);
+  border-color: rgba(255, 196, 0, 0.5);
+  color: #ffc400;
+}
+
 /* Gradient Footer */
 .gradient-footer {
   position: fixed;
@@ -476,13 +525,7 @@ export default {
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, 
-    #ff007f 0%, 
-    #ff9100 25%, 
-    #ffc400 50%, 
-    #29e083 75%, 
-    #007bff 100%
-  );
+  background: linear-gradient(90deg, #ff007f 0%, #ff9100 25%, #ffc400 50%, #29e083 75%, #007bff 100%);
   background-size: 200% 100%;
   animation: gradientMove 5s linear infinite;
   z-index: 1000;
@@ -493,8 +536,11 @@ export default {
   100% { background-position: 200% 0; }
 }
 
-/* ================================================= */
-/* Responsive Design */
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+/* Tablet */
 @media (max-width: 768px) {
   .login-page {
     padding: 1.5rem;
@@ -511,8 +557,19 @@ export default {
   .logo-icon {
     font-size: 3rem;
   }
+
+  .nav-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .nav-link:first-child {
+    grid-column: 1 / -1;
+  }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
   .login-page {
     padding: 1rem;
@@ -527,7 +584,11 @@ export default {
   }
 
   .nav-links {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .nav-link:first-child {
+    grid-column: 1;
   }
 
   .form-input {

@@ -6,15 +6,15 @@
           <span class="logo-text">FIT<span class="logo-highlight">ถึงใจ</span></span>
         </div>
         <nav class="nav-links">
-          <a href="#" class="nav-item">หน้าหลัก</a>
-          <a href="#" class="nav-item">เกี่ยวกับ</a>
-          <a href="#" class="nav-item">บริการ</a>
-          <a href="#" class="nav-item">ติดต่อ</a>
+          <a href="#home" class="nav-item">หน้าหลัก</a>
+          <a href="#stats" class="nav-item">สถิติ</a>
+          <a href="#services" class="nav-item">บริการ</a>
+          <a href="#reviews" class="nav-item">รีวิว</a>
         </nav>
       </div>
     </header>
 
-    <div class="hero-section">
+    <div class="hero-section" id="home">
       <div class="hero-content">
         <h1 class="hero-text">Fixถึงใจที่ถึงที่</h1>
         <p class="hero-subtitle">บริการคุณภาพ พร้อมฟิตเนสทุกที่ทุกเวลา</p>
@@ -25,6 +25,116 @@
             <span>เข้าสู่ระบบ</span>
           </span>
         </router-link>
+
+        <!-- ⭐ Popup Cards Section ⭐ -->
+        <div class="popup-cards-container" id="stats">
+          
+          <!-- Card 1: สถิติภาพรวม -->
+          <div class="popup-card">
+            <div class="card-icon">📊</div>
+            <h3 class="card-title">สถิติภาพรวม</h3>
+            
+            <div v-if="loadingStats" class="card-loading">
+              <div class="spinner"></div>
+              <p>กำลังโหลด...</p>
+            </div>
+            
+            <div v-else-if="overview" class="card-content">
+              <div class="mini-stat">
+                <span class="mini-icon">👨‍🔧</span>
+                <span class="mini-value">{{ overview.TOTAL_TECHNICIANS }}</span>
+                <span class="mini-label">ช่างทั้งหมด</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-icon">👥</span>
+                <span class="mini-value">{{ overview.TOTAL_CUSTOMERS }}</span>
+                <span class="mini-label">ลูกค้า</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-icon">✅</span>
+                <span class="mini-value">{{ overview.COMPLETED_JOBS }}</span>
+                <span class="mini-label">งานสำเร็จ</span>
+              </div>
+              <div class="mini-stat highlight">
+                <span class="mini-icon">⭐</span>
+                <span class="mini-value">{{ overview.OVERALL_RATING }}</span>
+                <span class="mini-label">คะแนนเฉลี่ย</span>
+              </div>
+            </div>
+            
+            <div v-else class="card-error">
+              <p>❌ ไม่สามารถโหลดข้อมูลได้</p>
+            </div>
+          </div>
+
+          <!-- Card 2: บริการยอดนิยม -->
+          <div class="popup-card" id="services">
+            <div class="card-icon">🔥</div>
+            <h3 class="card-title">บริการยอดนิยม</h3>
+            
+            <div v-if="loadingServices" class="card-loading">
+              <div class="spinner"></div>
+              <p>กำลังโหลด...</p>
+            </div>
+            
+            <div v-else-if="topServices.length > 0" class="card-content">
+              <div 
+                v-for="(service, index) in topServices.slice(0, 3)" 
+                :key="service.SERVICE_ID" 
+                class="service-item"
+              >
+                <span class="service-rank">#{{ index + 1 }}</span>
+                <span class="service-name">{{ service.SERVICE_NAME }}</span>
+                <span class="service-count">{{ service.BOOKING_COUNT }} จอง</span>
+              </div>
+              <div class="service-more">
+                <span>+ อีก {{ topServices.length - 3 }} บริการ</span>
+              </div>
+            </div>
+            
+            <div v-else class="card-error">
+              <p>❌ ไม่พบข้อมูลบริการ</p>
+            </div>
+            
+            <button class="card-btn" @click="showAllServices">ดูทั้งหมด</button>
+          </div>
+
+          <!-- Card 3: รีวิวล่าสุด -->
+          <div class="popup-card" id="reviews">
+            <div class="card-icon">💬</div>
+            <h3 class="card-title">รีวิวล่าสุด</h3>
+            
+            <div v-if="loadingReviews" class="card-loading">
+              <div class="spinner"></div>
+              <p>กำลังโหลด...</p>
+            </div>
+            
+            <div v-else-if="latestReviews.length > 0" class="card-content">
+              <div 
+                v-for="review in latestReviews.slice(0, 2)" 
+                :key="review.RATING_ID" 
+                class="review-item"
+              >
+                <div class="review-stars">
+                  <span v-for="i in Math.floor(review.SCORE)" :key="i" class="star filled">⭐</span>
+                  <span v-for="i in (5 - Math.floor(review.SCORE))" :key="'empty-'+i" class="star">☆</span>
+                </div>
+                <p class="review-text">{{ truncateText(review.SHORT_COMMENT, 60) }}</p>
+                <div class="review-meta">
+                  <span class="review-author">{{ review.CUSTOMER_NAME }}</span>
+                  <span class="review-date">{{ review.JOB_DATE }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div v-else class="card-error">
+              <p>❌ ไม่พบรีวิว</p>
+            </div>
+            
+            <button class="card-btn" @click="showAllReviews">ดูทั้งหมด</button>
+          </div>
+
+        </div>
       </div>
     </div>
 
@@ -33,7 +143,85 @@
 </template>
 
 <script setup>
-// ไม่มี JS logic สำหรับหน้านี้
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+// ⭐ Reactive Data
+const overview = ref(null);
+const topServices = ref([]);
+const latestReviews = ref([]);
+
+const loadingStats = ref(true);
+const loadingServices = ref(true);
+const loadingReviews = ref(true);
+
+// ⭐ Load Data จาก API
+onMounted(async () => {
+  await loadAllData();
+});
+
+async function loadAllData() {
+  await Promise.all([
+    loadSystemOverview(),
+    loadTopServices(),
+    loadLatestReviews()
+  ]);
+}
+
+async function loadSystemOverview() {
+  try {
+    const response = await axios.get('http://localhost:3000/api/public/system-overview');
+    overview.value = response.data;
+    console.log('✅ สถิติภาพรวม:', overview.value);
+  } catch (error) {
+    console.error('❌ Error loading overview:', error);
+  } finally {
+    loadingStats.value = false;
+  }
+}
+
+async function loadTopServices() {
+  try {
+    const response = await axios.get('http://localhost:3000/api/public/top-services');
+    topServices.value = response.data;
+    console.log('✅ บริการยอดนิยม:', topServices.value.length, 'รายการ');
+  } catch (error) {
+    console.error('❌ Error loading services:', error);
+  } finally {
+    loadingServices.value = false;
+  }
+}
+
+async function loadLatestReviews() {
+  try {
+    const response = await axios.get('http://localhost:3000/api/public/latest-reviews');
+    latestReviews.value = response.data;
+    console.log('✅ รีวิวล่าสุด:', latestReviews.value.length, 'รายการ');
+  } catch (error) {
+    console.error('❌ Error loading reviews:', error);
+  } finally {
+    loadingReviews.value = false;
+  }
+}
+
+// ⭐ Helper Functions
+function truncateText(text, maxLength) {
+  if (!text) return '';
+  return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+}
+
+function showAllServices() {
+  alert('🔥 กำลังไปหน้าบริการทั้งหมด...');
+  // router.push('/services'); // ถ้ามีหน้า Services
+}
+
+function showAllReviews() {
+  alert('💬 กำลังไปหน้ารีวิวทั้งหมด...');
+  // router.push('/reviews'); // ถ้ามีหน้า Reviews
+}
 </script>
 
 <style>
@@ -51,6 +239,7 @@ html {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -60,7 +249,7 @@ body {
   height: 100%;
   background-color: #000000;
   overflow-x: hidden;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', 'Kanit', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 #app {
@@ -179,7 +368,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 0 2rem;
+  padding: 140px 2rem 2rem;
   overflow: hidden;
 }
 
@@ -213,6 +402,8 @@ body {
   position: relative;
   z-index: 1;
   margin-top: 4rem;
+  width: 100%;
+  max-width: 1400px;
 }
 
 /* ข้อความหัวเรื่อง ขยับขึ้นลงเล็กน้อย */
@@ -309,6 +500,300 @@ body {
 }
 
 /* ================================================= */
+/* ⭐ Popup Cards Container */
+.popup-cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Popup Card */
+.popup-card {
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 0, 127, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-card:nth-child(1) { animation-delay: 0.1s; }
+.popup-card:nth-child(2) { animation-delay: 0.2s; }
+.popup-card:nth-child(3) { animation-delay: 0.3s; }
+
+.popup-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 0, 127, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.popup-card:hover::before {
+  opacity: 1;
+}
+
+.popup-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(255, 0, 127, 0.6);
+  box-shadow: 0 20px 60px rgba(255, 0, 127, 0.3);
+}
+
+/* Card Icon */
+.card-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 127, 0.5));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff007f;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+}
+
+/* Card Loading */
+.card-loading {
+  color: rgba(255, 255, 255, 0.6);
+  padding: 2rem 0;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-height: 200px;
+  justify-content: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 0, 127, 0.2);
+  border-top-color: #ff007f;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Card Error */
+.card-error {
+  color: rgba(255, 100, 100, 0.8);
+  padding: 2rem 0;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card Content */
+.card-content {
+  margin-bottom: 1.5rem;
+  min-height: 200px;
+}
+
+/* Mini Stats (สำหรับ Card 1) */
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.mini-stat:hover {
+  background: rgba(255, 0, 127, 0.1);
+  border-color: rgba(255, 0, 127, 0.3);
+  transform: scale(1.05);
+}
+
+.mini-stat.highlight {
+  background: rgba(255, 196, 0, 0.1);
+  border-color: rgba(255, 196, 0, 0.3);
+}
+
+.mini-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mini-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff007f;
+  margin-bottom: 0.25rem;
+}
+
+.mini-stat.highlight .mini-value {
+  color: #ffc400;
+}
+
+.mini-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Service Items (สำหรับ Card 2) */
+.service-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.service-item:hover {
+  background: rgba(255, 0, 127, 0.1);
+  border-color: rgba(255, 0, 127, 0.3);
+  transform: translateX(5px);
+}
+
+.service-rank {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffc400;
+  min-width: 30px;
+}
+
+.service-name {
+  flex: 1;
+  color: white;
+  font-size: 0.9rem;
+  text-align: left;
+  padding: 0 0.5rem;
+}
+
+.service-count {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.service-more {
+  text-align: center;
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Review Items (สำหรับ Card 3) */
+.review-item {
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.review-item:hover {
+  background: rgba(255, 0, 127, 0.1);
+  border-color: rgba(255, 0, 127, 0.3);
+  transform: scale(1.02);
+}
+
+.review-stars {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.star {
+  color: rgba(255, 196, 0, 0.3);
+  margin-right: 2px;
+}
+
+.star.filled {
+  color: #ffc400;
+}
+
+.review-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.review-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-author {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.review-date {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Card Button */
+.card-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, rgba(255, 0, 127, 0.2), rgba(255, 0, 127, 0.4));
+  border: 1px solid rgba(255, 0, 127, 0.5);
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.card-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 127, 0.4), rgba(255, 0, 127, 0.6));
+  border-color: rgba(255, 0, 127, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 0, 127, 0.4);
+}
+
+/* ================================================= */
 /* Footer Bar */
 .blue-footer-bar {
   position: fixed;
@@ -329,8 +814,12 @@ body {
 }
 
 /* ================================================= */
-/* Responsive */
+/* Responsive for Popup Cards */
 @media screen and (max-width: 1024px) {
+  .popup-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
   .navbar-container {
     padding: 1rem 1.5rem;
   }
@@ -357,6 +846,12 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+  .popup-cards-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  
   .navbar-container {
     flex-direction: column;
     gap: 1rem;
@@ -382,6 +877,14 @@ body {
     height: 45px; 
     font-size: 1rem; 
   }
+  
+  .card-icon {
+    font-size: 2.5rem;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -395,6 +898,10 @@ body {
   
   .nav-item {
     font-size: 0.85rem;
+  }
+  
+  .popup-card {
+    padding: 1.5rem;
   }
 }
 </style>

@@ -1,43 +1,55 @@
 <template>
   <div class="register-page">
-    <!-- Background Particles Effect -->
     <div class="particles-bg"></div>
 
-    <!-- Register Card Container -->
     <div class="register-container">
       <div class="register-card">
-        <!-- Header Section -->
         <div class="register-header">
           <div class="logo-icon">✨</div>
           <h1 class="register-title">สมัครสมาชิก</h1>
           <p class="register-subtitle">เริ่มต้นใช้งานกับเรา</p>
         </div>
 
-        <!-- Register Form -->
         <form @submit.prevent="register" class="register-form">
-          <!-- Username Input -->
+          
           <div class="form-group">
             <label class="form-label">
-              <span class="label-icon">👤</span>
-              <span>ชื่อผู้ใช้</span>
+              <span class="label-icon">🧑‍</span>
+              <span>ชื่อ-นามสกุล (NAME)</span>
             </label>
             <div class="input-wrapper">
               <span class="input-icon">@</span>
               <input 
                 type="text" 
-                v-model="username" 
-                placeholder="กรอกชื่อผู้ใช้" 
+                v-model="name" 
+                placeholder="กรอกชื่อ-นามสกุล" 
                 required 
                 class="form-input"
               />
             </div>
           </div>
 
-          <!-- Email Input -->
+          <div class="form-group">
+            <label class="form-label">
+              <span class="label-icon">👤</span>
+              <span>ชื่อผู้ใช้ (UNAME/TUNAME)</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">@</span>
+              <input 
+                type="text" 
+                v-model="uname" 
+                placeholder="กรอกชื่อผู้ใช้ (ห้ามซ้ำ)" 
+                required 
+                class="form-input"
+              />
+            </div>
+          </div>
+
           <div class="form-group">
             <label class="form-label">
               <span class="label-icon">📧</span>
-              <span>อีเมล</span>
+              <span>อีเมล (EMAIL)</span>
             </label>
             <div class="input-wrapper">
               <span class="input-icon">✉️</span>
@@ -50,18 +62,34 @@
               />
             </div>
           </div>
+          
+          <div class="form-group">
+            <label class="form-label">
+              <span class="label-icon">📞</span>
+              <span>เบอร์โทร (PHONE/TPHONE)</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">#</span>
+              <input 
+                type="tel" 
+                v-model="phone" 
+                placeholder="08xxxxxxxx" 
+                required 
+                class="form-input"
+              />
+            </div>
+          </div>
 
-          <!-- Password Input -->
           <div class="form-group">
             <label class="form-label">
               <span class="label-icon">🔒</span>
-              <span>รหัสผ่าน</span>
+              <span>รหัสผ่าน (UPASSW/TPASSW)</span>
             </label>
             <div class="input-wrapper">
               <span class="input-icon">🔐</span>
               <input 
                 :type="showPassword ? 'text' : 'password'" 
-                v-model="password" 
+                v-model="upassw" 
                 placeholder="กรอกรหัสผ่าน" 
                 required
                 class="form-input"
@@ -77,7 +105,6 @@
             </div>
           </div>
 
-          <!-- Role Selection -->
           <div class="form-group">
             <label class="form-label">
               <span class="label-icon">🎯</span>
@@ -117,14 +144,16 @@
               </label>
             </div>
           </div>
+          
+          <p v-if="message" :class="isError ? 'error-message' : 'success-message'">
+            {{ message }}
+          </p>
 
-          <!-- Register Button -->
           <button type="submit" class="btn-register">
             <span>สมัครสมาชิก</span>
             <span class="btn-arrow">→</span>
           </button>
-
-          <!-- Login Link -->
+          
           <p class="login-text">
             มีบัญชีอยู่แล้ว? 
             <router-link to="/login" class="login-link">
@@ -132,7 +161,6 @@
             </router-link>
           </p>
 
-          <!-- Navigation Links -->
           <div class="nav-links">
             <router-link to="/home" class="nav-link">
               <span class="link-icon">🏠</span>
@@ -143,56 +171,117 @@
       </div>
     </div>
 
-    <!-- Gradient Footer Bar -->
     <div class="gradient-footer"></div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'; // 1. Import axios
+
 export default {
   name: "Register",
   data() {
     return {
-      username: "",
+      // ⭐️ ข้อมูลที่รับจากฟอร์ม
+      name: "",       
+      uname: "",      
       email: "",
-      password: "",
+      phone: "",      
+      upassw: "",     
       selectedRole: "", // 'customer' หรือ 'technician'
       showPassword: false,
+      
+      // ⭐️ ตัวแปรสำหรับแสดงผล
+      message: "",    
+      isError: false  
     };
   },
   methods: {
     handleRoleChange(role) {
-      // ถ้าเลือกอันเดิม -> ยกเลิก
       if (this.selectedRole === role) {
         this.selectedRole = "";
       } else {
         this.selectedRole = role;
       }
     },
-    register() {
-      if (!this.username || !this.email || !this.password) {
-        alert("❌ กรุณากรอกข้อมูลให้ครบทุกช่อง");
-        return;
-      }
+    
+    // ⭐️ 5. "ใส่ไส้" ให้ฟังก์ชัน register (ที่ปลดล็อกแล้ว) ⭐️
+    async register() {
+      this.message = "กำลังตรวจสอบ...";
+      this.isError = false;
+
+      // 1. เช็กว่าเลือก Role หรือยัง
       if (!this.selectedRole) {
-        alert("❌ กรุณาเลือกประเภทผู้ใช้");
+        this.message = "❌ กรุณาเลือกประเภทผู้ใช้ (ลูกค้า หรือ ช่าง)";
+        this.isError = true;
         return;
       }
+      
+      // ⭐️⭐️ 2. "ปลดล็อก" ส่วนของช่าง ⭐️⭐️
+      if (this.selectedRole === 'technician') {
+        
+        // ---- เริ่มส่วนของช่าง ----
+        try {
+          // ยิงไปหา API /api/register/tech
+          const response = await axios.post('http://localhost:3000/api/register/tech', {
+            // ส่งข้อมูลจากฟอร์ม (Backend จะเอาไปใส่ Default เอง)
+            NAME: this.name,
+            EMAIL: this.email,
+            UNAME: this.uname,
+            UPASSW: this.upassw,
+            PHONE: this.phone
+          });
 
-      console.log({
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        role: this.selectedRole,
-      });
+          // ถ้าสำเร็จ
+          this.message = response.data.message; // "สมัครสมาชิก (Tech) สำเร็จ!"
+          this.isError = false;
+          
+          // รอ 2 วิ แล้วเด้งไปหน้า Login (Tech)
+          setTimeout(() => {
+            this.$router.push('/logintech'); // ⭐️ เด้งไป /logintech
+          }, 2000);
 
-      alert(`✅ สมัครสมาชิกเป็น "${this.selectedRole === 'customer' ? 'ลูกค้า' : 'ช่างเทคนิค'}" เรียบร้อย!`);
+        } catch (error) {
+          // ถ้า Error
+          if (error.response) {
+             this.message = 'Error: ' + error.response.data.message;
+          } else {
+             this.message = 'Error: เชื่อมต่อ Backend ไม่ได้ (ลืมรัน node index.js?)';
+          }
+          this.isError = true;
+        }
+        // ---- จบส่วนของช่าง ----
 
-      // Redirect based on role
-      if (this.selectedRole === 'customer') {
-        this.$router.push('/login');
-      } else {
-        this.$router.push('/logintech');
+      } else if (this.selectedRole === 'customer') {
+        
+        // ---- ส่วนของลูกค้า (เหมือนเดิม) ----
+        try {
+          // ยิงไปหา API /api/register/user
+          const response = await axios.post('http://localhost:3000/api/register/user', {
+            NAME: this.name,
+            EMAIL: this.email,
+            UNAME: this.uname,
+            UPASSW: this.upassw,
+            PHONE: this.phone
+          });
+
+          this.message = response.data.message;
+          this.isError = false;
+          
+          // รอ 2 วิ แล้วเด้งไปหน้า Login (User)
+          setTimeout(() => {
+            this.$router.push('/login'); // ⭐️ เด้งไป /login
+          }, 2000);
+
+        } catch (error) {
+          if (error.response) {
+             this.message = 'Error: ' + error.response.data.message;
+          } else {
+             this.message = 'Error: เชื่อมต่อ Backend ไม่ได้ (ลืมรัน node index.js?)';
+          }
+          this.isError = true;
+        }
+        // ---- จบส่วนของลูกค้า ----
       }
     },
   },
@@ -200,8 +289,29 @@ export default {
 </script>
 
 <style scoped>
-/* ================================================= */
-/* Page Setup */
+/* ⭐️ 6. CSS สำหรับ Error/Success Message ⭐️ */
+.error-message { 
+  color: #ff4d4d; 
+  background: rgba(255, 0, 0, 0.1); 
+  border: 1px solid #ff4d4d; 
+  padding: 10px; 
+  border-radius: 8px; 
+  text-align: center; 
+  margin-top: -10px; 
+  margin-bottom: 10px; 
+}
+.success-message { 
+  color: #29e083; 
+  background: rgba(41, 224, 131, 0.1); 
+  border: 1px solid #29e083; 
+  padding: 10px; 
+  border-radius: 8px; 
+  text-align: center; 
+  margin-top: -10px; 
+  margin-bottom: 10px; 
+}
+
+/* (ที่เหลือคือ CSS เดิมของคุณ) */
 :global(html),
 :global(body) {
   margin: 0;
@@ -224,8 +334,6 @@ export default {
   overflow: hidden;
 }
 
-/* ================================================= */
-/* Background Particles */
 .particles-bg {
   position: fixed;
   top: 0;
@@ -249,8 +357,6 @@ export default {
   50% { background-position: 100% 100%; }
 }
 
-/* ================================================= */
-/* Register Container */
 .register-container {
   position: relative;
   z-index: 1;
@@ -270,8 +376,6 @@ export default {
   }
 }
 
-/* ================================================= */
-/* Register Card */
 .register-card {
   background: rgba(20, 20, 20, 0.9);
   backdrop-filter: blur(20px);
@@ -291,8 +395,6 @@ export default {
     0 0 80px rgba(255, 0, 127, 0.3);
 }
 
-/* ================================================= */
-/* Header Section */
 .register-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -328,8 +430,6 @@ export default {
   font-weight: 300;
 }
 
-/* ================================================= */
-/* Form Styling */
 .register-form {
   display: flex;
   flex-direction: column;
@@ -357,8 +457,6 @@ export default {
   font-size: 1.2rem;
 }
 
-/* ================================================= */
-/* Input Wrapper */
 .input-wrapper {
   position: relative;
   display: flex;
@@ -403,8 +501,6 @@ export default {
   border-color: rgba(255, 0, 127, 0.5);
 }
 
-/* ================================================= */
-/* Toggle Password Button */
 .toggle-password {
   position: absolute;
   right: 1rem;
@@ -423,8 +519,6 @@ export default {
   transform: scale(1.1);
 }
 
-/* ================================================= */
-/* Role Selection */
 .role-options {
   display: flex;
   gap: 1rem;
@@ -492,8 +586,6 @@ export default {
   filter: drop-shadow(0 0 20px rgba(255, 0, 127, 0.6));
 }
 
-/* ================================================= */
-/* Register Button */
 .btn-register {
   width: 100%;
   padding: 1.2rem;
@@ -534,8 +626,6 @@ export default {
   transform: translateX(5px);
 }
 
-/* ================================================= */
-/* Login Text */
 .login-text {
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
@@ -555,8 +645,6 @@ export default {
   text-decoration: underline;
 }
 
-/* ================================================= */
-/* Navigation Links */
 .nav-links {
   display: flex;
   gap: 1rem;
@@ -593,8 +681,6 @@ export default {
   font-size: 1.1rem;
 }
 
-/* ================================================= */
-/* Gradient Footer */
 .gradient-footer {
   position: fixed;
   bottom: 0;
@@ -618,8 +704,6 @@ export default {
   100% { background-position: 200% 0; }
 }
 
-/* ================================================= */
-/* Responsive Design */
 @media (max-width: 768px) {
   .register-page {
     padding: 1.5rem;
